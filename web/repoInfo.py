@@ -82,7 +82,7 @@ def getRepoCloneInfo(page=1):
     result = getRepoInfo(sql_select)
     # data = {}
     index = 0
-    repoData = {}
+    repoData = []
     print(result)
     for repoObject in result:
         data = {}
@@ -91,9 +91,8 @@ def getRepoCloneInfo(page=1):
         data['git_address'] = repoObject[2]
         data['pushed_at'] = repoObject[3]
         data['scan_time'] = repoObject[4]
-        repoData[index] = data
-        index+=1
-    return jsonify(repoData)
+        repoData.append(data)
+    return str(repoData)
 
 def getRepoInfo(sql_select):
     '''
