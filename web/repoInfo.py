@@ -5,8 +5,10 @@
 from flask import Flask, jsonify
 import pymysql
 import datetime
+from flask_cors import CORS
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route("/hello")
 def hello_world():
@@ -17,7 +19,7 @@ def hello_world():
 #     return 'User %s' % username
 
 
-@app.route("/repobasicinfo/<days>/")
+@app.route("/repobasicinfo/<int:days>/")
 def show_basicInfo(days):
 
     '''
@@ -34,7 +36,7 @@ def show_basicInfo(days):
     return result
 
 
-@app.route("/repoclone/<days>/")
+@app.route("/repoclone/<int:days>/")
 def get_repoClone(days):
     '''
     该函数用来获取项目clone的情况（一日内，七日内，一月内）
@@ -172,7 +174,8 @@ def testFun():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001)
+    app.run(host='0.0.0.0', port=5001, threaded=True)
+
     # getRepoFromMysql()
     # testFun()
     # getRepoCloneInfo()
